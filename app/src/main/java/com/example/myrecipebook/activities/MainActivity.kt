@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun searchRecipes(query: String?) {
-        val service= RetrofitProvider.GetRetrofit()
+        val service= RetrofitProvider.getRetrofit()
 
         CoroutineScope(Dispatchers.IO).launch {
             val result = service.findRecipeByName(query!!)

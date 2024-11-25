@@ -8,10 +8,10 @@ class RetrofitProvider {
 
     companion object
     {
-        fun GetRetrofit() : RecipeService
+        fun getRetrofit() : RecipeService
         {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://dummyjson.com/recipes")
+                .baseUrl("https://dummyjson.com/recipes/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
