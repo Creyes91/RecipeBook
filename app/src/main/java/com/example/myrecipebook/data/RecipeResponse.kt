@@ -14,7 +14,11 @@ class RecipeResponse (
 data class Recipe( //busqueda por id
     @SerializedName("id") val id: String,
     @SerializedName("name") val name: String,
-    @SerializedName("image") val image: String
+    @SerializedName("image") val image: String,
+    @SerializedName("cuisine") val cuisine: String,
+    @SerializedName("difficulty") val difficulty: String,
+    @SerializedName("ingredients") val ingredients: List<String>,
+    @SerializedName("instructions") val instructions: List<String>
 )
 {}
 

@@ -1,11 +1,16 @@
 package com.example.myrecipebook.activities
 
+import android.content.Intent
+import android.icu.lang.UCharacter.VerticalOrientation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myrecipebook.R
+import com.example.myrecipebook.adapters.FavAdapter
 import com.example.myrecipebook.adapters.ListAdapter
 import com.example.myrecipebook.data.Recipe
 import com.example.myrecipebook.databinding.ActivityMainBinding
@@ -17,22 +22,30 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
-    lateinit var adapter: ListAdapter
+    lateinit var searchAdapter: ListAdapter
+    lateinit var favAdapter: FavAdapter
     var recipesList: List<Recipe> = emptyList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        adapter= ListAdapter(recipesList) {
-
+        searchAdapter= ListAdapter(recipesList) {
             val recipe= recipesList[it]
+            navigateTo(recipe)
+        }
 
+        favAdapter=FavAdapter(recipesList){
+
+            val recipe=recipesList[it]
+            navigateTo(recipe)
 
         }
 
-        binding.favReciclerView.adapter= adapter
-        binding.favReciclerView.layoutManager= GridLayoutManager(this,2)
+
+
+        binding.searchReciclerView.adapter= searchAdapter
+        binding.searchReciclerView.layoutManager= LinearLayoutManager(this,RecyclerView.VERTICAL,false)
 
 
 
@@ -73,17 +86,33 @@ class MainActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val result = service.findRecipeByName(query!!)
+
+           // val result= service.findRecipeById("1")
+
+            //println(service.findRecipeById("1"))
             println(result)
 
             CoroutineScope(Dispatchers.Main).launch {
                 if (result.total!= "0")
                 { recipesList= result.recipes
-                    adapter.updatesItems(result.recipes)}
+                    searchAdapter.updatesItems(result.recipes)}
 
 
 
             }
 
         }
+    }
+
+
+    private fun navigateTo(recipe: Recipe)
+    {
+        intent= Intent(this,RecipeActivity::class.java)
+
+        intent.putExtra(RecipeActivity.EXTRA_RECIPE_ID, recipe.id)
+        startActivity(intent)
+
+
+
     }
 }

@@ -2,4 +2,11 @@
     <string name="app_name">My Recipe Book</string>
 
     <string name="search">Search</string>
+
+    <string-array name="Selection">
+        <item>Ingredients</item>
+        <item>Instruction</item>
+    </string-array>
+
+
 </resources>
