@@ -50,12 +50,12 @@ class RecipeActivity : AppCompatActivity() {
             if (selected== "Instruction")
             {
                 binding.instruccionTextview.visibility= View.VISIBLE
-                binding.ingredienteTextview.visibility= View.GONE
+                binding.ingredientsLayout.visibility= View.GONE
             }else {
                 if (selected== "Ingredients")
                 {
                     binding.instruccionTextview.visibility= View.GONE
-                    binding.ingredienteTextview.visibility= View.VISIBLE
+                    binding.ingredientsLayout.visibility= View.VISIBLE
 
                 }
             }
@@ -76,9 +76,10 @@ class RecipeActivity : AppCompatActivity() {
     }
 
     private fun loadData(recipe: Recipe){
-        binding.tittleRecipe.text=recipe.name.toString()
-        binding.ingredienteTextview.text=recipe.ingredients.joinToString("\n")
-        binding.instruccionTextview.text=recipe.instructions.joinToString("\n")
+        //binding.tittleRecipe.text=recipe.name.toString()
+        supportActionBar?.title= recipe.name.toString()
+        binding.ingredienteTextview.text=recipe.ingredients.joinToString("\n \n-","-",)
+        binding.instruccionTextview.text=recipe.instructions.joinToString("\n \n-","-")
         Picasso.get().load(recipe.image).into(binding.imageRecipeView)
 
 

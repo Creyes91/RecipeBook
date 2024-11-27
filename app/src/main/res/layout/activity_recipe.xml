@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/imageRecipeView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="300dp"
         android:scaleType="centerCrop"
         app:layout_constraintVertical_weight="1"
@@ -27,6 +27,7 @@
         android:layout_height="0dp"
         app:cardCornerRadius="32dp"
         android:layout_marginTop="-32dp"
+
         app:layout_constraintVertical_weight="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageRecipeView"
@@ -36,24 +37,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="16dp"
+
             android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tittleRecipe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textSize="30sp"
-            android:layout_marginTop="32dp"
-            tools:text="Recipe">
-
-
-        </TextView>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Selection"
+            android:paddingTop="32dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">>
             <AutoCompleteTextView
                 android:id="@+id/autoCompleteSelection"
@@ -67,18 +60,44 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ingredientsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+
             <TextView
                 android:id="@+id/ingredienteTextview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
+                >
+
+
 
             </TextView>
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:src="@drawable/ic_list_add"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/instruccionTextview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:visibility="gone">
 
             </TextView>

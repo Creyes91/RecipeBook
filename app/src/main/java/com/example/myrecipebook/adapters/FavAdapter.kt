@@ -1,10 +1,12 @@
 package com.example.myrecipebook.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myrecipebook.data.Recipe
 import com.example.myrecipebook.databinding.ItemRecipeBinding
+
 import com.squareup.picasso.Picasso
 
 class FavAdapter (var items: List<Recipe>, val onItemClick: (Int)-> Unit): RecyclerView.Adapter<FavAdapter.ViewHolder>() {
@@ -35,8 +37,12 @@ class FavAdapter (var items: List<Recipe>, val onItemClick: (Int)-> Unit): Recyc
     class ViewHolder(val binding: ItemRecipeBinding): RecyclerView.ViewHolder(binding.root){
 
         fun render(recipe: Recipe){
-
+            binding.root.visibility= View.VISIBLE
             Picasso.get().load(recipe.image).into(binding.recipeImageView)
+            binding.cookTimeTextView.text= recipe.cookTimeMinutes + "'"
+            binding.ratingBar.rating= recipe.rating.toFloat()
+            binding.tittleRecipeTextView.text=recipe.name
+
         }
 
     }

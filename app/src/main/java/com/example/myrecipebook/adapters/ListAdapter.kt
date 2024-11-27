@@ -1,6 +1,7 @@
 package com.example.myrecipebook.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -12,7 +13,7 @@ import com.squareup.picasso.Picasso
 
 class ListAdapter (var items: List<Recipe>, val onItemClick: (Int)-> Unit): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-      //  val binding= ItemRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         val binding= SearchRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
@@ -39,7 +40,7 @@ class ListAdapter (var items: List<Recipe>, val onItemClick: (Int)-> Unit): Recy
     class ViewHolder(val binding: SearchRecipeBinding): RecyclerView.ViewHolder(binding.root){
 
         fun render(recipe: Recipe){
-
+        //  binding.root.visibility= View.VISIBLE
           binding.idtextView.setText(recipe.id.toString())
           binding.cuisineTextView.text= recipe.cuisine.toString()
             binding.recipeTextView.text=recipe.name.toString()

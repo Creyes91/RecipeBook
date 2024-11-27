@@ -2,13 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/item_home"
+        android:id="@+id/item_All"
         android:enabled="true"
-        android:title="home" />
+        android:title="All"
+        android:icon="@drawable/ic_all"/>
     <item
-        android:id="@+id/item_list"
+        android:id="@+id/item_Snack"
         android:enabled="true"
-        android:title="Purchase list"/>
+        android:title="Breackfast"
+        android:icon="@drawable/ic_dessert"/>
+    <item
+        android:id="@+id/item_Lunch"
+        android:enabled="true"
+        android:title="Lunch"
+        android:icon="@drawable/ic_lunch"/>
+    <item
+        android:id="@+id/item_Dinner"
+        android:enabled="true"
+        android:title="Dinner"
+        android:icon="@drawable/ic_dinner"/>
+
+
+
 
 
 </menu>

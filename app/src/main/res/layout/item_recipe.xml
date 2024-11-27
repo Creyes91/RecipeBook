@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -13,7 +14,7 @@
         <ImageView
             android:id="@+id/recipeImageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="500dp"
             android:scaleType="centerCrop"
             tools:src="@drawable/image1">
 
@@ -21,6 +22,64 @@
         </ImageView>
 
     </androidx.cardview.widget.CardView>
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:numStars="5"
+        tools:rating="4.6">
+
+    </RatingBar>
+
+
+    <LinearLayout
+        android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?attr/materialIconButtonStyle"
+            app:icon="@drawable/ic_chef">
+
+        </Button>
+
+        <TextView
+            android:id="@+id/tittleRecipeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center_vertical"
+            android:text="Tittle">
+
+        </TextView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?attr/materialIconButtonStyle"
+            app:icon="@drawable/ic_timer">
+
+        </Button>
+
+
+
+        <TextView
+            android:id="@+id/cookTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            tools:text="CookTime">
+
+        </TextView>
+
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

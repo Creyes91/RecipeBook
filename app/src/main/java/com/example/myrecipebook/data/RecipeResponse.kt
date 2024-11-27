@@ -18,7 +18,9 @@ data class Recipe( //busqueda por id
     @SerializedName("cuisine") val cuisine: String,
     @SerializedName("difficulty") val difficulty: String,
     @SerializedName("ingredients") val ingredients: List<String>,
-    @SerializedName("instructions") val instructions: List<String>
+    @SerializedName("instructions") val instructions: List<String>,
+    @SerializedName("cookTimeMinutes") val cookTimeMinutes: String,
+    @SerializedName("rating") val rating: String
 )
 {}
 

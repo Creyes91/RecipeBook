@@ -11,7 +11,7 @@ class RetrofitProvider {
         fun getRetrofit() : RecipeService
         {
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://dummyjson.com/recipes/")
+                .baseUrl("https://dummyjson.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
