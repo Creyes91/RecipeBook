@@ -21,8 +21,8 @@ class SessionManager (private val context: Context)  {
 
     }
 
-    fun isFav():Boolean
+    fun isFav(recipeID: String):Boolean
     {
-        return
+        return recipeID==getFavorite()
     }
 }

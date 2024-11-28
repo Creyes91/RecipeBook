@@ -9,7 +9,7 @@
     <item
         android:id="@+id/item_Snack"
         android:enabled="true"
-        android:title="Breackfast"
+        android:title="Snack"
         android:icon="@drawable/ic_dessert"/>
     <item
         android:id="@+id/item_Lunch"
@@ -21,6 +21,11 @@
         android:enabled="true"
         android:title="Dinner"
         android:icon="@drawable/ic_dinner"/>
+    <item
+        android:id="@+id/item_Favorite"
+        android:enabled="true"
+        android:title="Fav"
+        android:icon="@drawable/ic_fav"/>
 
 
 

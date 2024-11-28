@@ -6,6 +6,7 @@
     <string-array name="Selection">
         <item>Ingredients</item>
         <item>Instruction</item>
+        <item>Comments</item>
     </string-array>
 
 
