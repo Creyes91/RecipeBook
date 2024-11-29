@@ -4,27 +4,27 @@
     <item
         android:id="@+id/item_All"
         android:enabled="true"
-        android:title="All"
+        android:title="@string/all"
         android:icon="@drawable/ic_all"/>
     <item
         android:id="@+id/item_Snack"
         android:enabled="true"
-        android:title="Snack"
+        android:title="@string/snack"
         android:icon="@drawable/ic_dessert"/>
     <item
         android:id="@+id/item_Lunch"
         android:enabled="true"
-        android:title="Lunch"
+        android:title="@string/lunch"
         android:icon="@drawable/ic_lunch"/>
     <item
         android:id="@+id/item_Dinner"
         android:enabled="true"
-        android:title="Dinner"
+        android:title="@string/dinner"
         android:icon="@drawable/ic_dinner"/>
     <item
         android:id="@+id/item_Favorite"
         android:enabled="true"
-        android:title="Fav"
+        android:title="@string/fav"
         android:icon="@drawable/ic_fav"/>
 
 

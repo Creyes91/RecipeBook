@@ -31,14 +31,16 @@ class MainActivity : AppCompatActivity() {
     lateinit var searchAdapter: ListAdapter
     lateinit var favAdapter: FavAdapter
     private var query= "all"
-
+    lateinit var Session: SessionManager
     var recipesList: List<Recipe> = emptyList()
+    var faId=-1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        Session= SessionManager(this)
 
 
 
@@ -47,12 +49,19 @@ class MainActivity : AppCompatActivity() {
             navigateTo(recipe)
         }
 
-        favAdapter=FavAdapter(recipesList){
+        favAdapter=FavAdapter(recipesList,{
 
             val recipe=recipesList[it]
             navigateTo(recipe)
 
-        }
+        },{
+            var recipe= recipesList[it]
+            if(recipe.id==Session.getFavorite())
+            Session.setFavorite("-1")
+            else{
+                if(Session.getFavorite()=="-1")
+                Session.setFavorite(recipe.id)}
+        })
 
      binding.mainReciclerView.adapter= favAdapter
         binding.mainReciclerView.layoutManager=LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
@@ -76,6 +85,9 @@ class MainActivity : AppCompatActivity() {
             }
                 R.id.item_Dinner->{
                     query="Dinner"
+                }
+                R.id.item_Favorite->{
+                    query="Favorite"
                 }
 
 
@@ -135,10 +147,17 @@ class MainActivity : AppCompatActivity() {
 
         val service= RetrofitProvider.getRetrofit()
         var result= RecipeResponse(emptyList(),"0")
+
         CoroutineScope(Dispatchers.IO).launch {
+
+
+
+
             if(mealType== "all") {
                  result = service.findAllRecipes()
-            }else{
+            }else
+
+            {
                  result = service.findRecipesByMeal(mealType)
             }
 

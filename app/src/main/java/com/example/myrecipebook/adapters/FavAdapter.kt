@@ -3,6 +3,7 @@ package com.example.myrecipebook.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.view.menu.MenuView.ItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myrecipebook.data.Recipe
 import com.example.myrecipebook.databinding.ItemRecipeBinding
@@ -12,7 +13,7 @@ import com.squareup.picasso.Picasso
 
 
 
-class FavAdapter (var items: List<Recipe>, val onItemClick: (Int)-> Unit): RecyclerView.Adapter<FavAdapter.ViewHolder>() {
+class FavAdapter (var items: List<Recipe>, val onItemClick: (Int)-> Unit, val onItemCheck:(Int)-> Unit): RecyclerView.Adapter<FavAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding= ItemRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -28,6 +29,10 @@ class FavAdapter (var items: List<Recipe>, val onItemClick: (Int)-> Unit): Recyc
 
         holder.itemView.setOnClickListener {
             onItemClick(position)
+        }
+
+        holder.binding.iconFav.setOnClickListener {
+            onItemCheck(position)
         }
 
     }
@@ -46,6 +51,7 @@ class FavAdapter (var items: List<Recipe>, val onItemClick: (Int)-> Unit): Recyc
             binding.cookTimeTextView.text= recipe.cookTimeMinutes + "'"
             binding.ratingBar.rating= recipe.rating.toFloat()
             binding.tittleRecipeTextView.text=recipe.name
+            binding.iconFav.isChecked= SessionManager(itemView.context).isFav(recipe.id)
 
         }
 
