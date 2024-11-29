@@ -1,6 +1,6 @@
 package com.example.myrecipebook.data
 
-class CommentTask(var recipeid: Long,var comment: String) {
+class CommentTask(var id: Long ,var recipeid: Long,var comment: String) {
 
     companion object{
 

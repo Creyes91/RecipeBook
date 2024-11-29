@@ -6,8 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myrecipebook.data.Recipe
 import com.example.myrecipebook.databinding.ItemRecipeBinding
+import com.example.myrecipebook.utils.SessionManager
 
 import com.squareup.picasso.Picasso
+
+
 
 class FavAdapter (var items: List<Recipe>, val onItemClick: (Int)-> Unit): RecyclerView.Adapter<FavAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,6 +29,7 @@ class FavAdapter (var items: List<Recipe>, val onItemClick: (Int)-> Unit): Recyc
         holder.itemView.setOnClickListener {
             onItemClick(position)
         }
+
     }
 
     fun updatesItems(recipes: List<Recipe>) {

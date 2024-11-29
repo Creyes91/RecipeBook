@@ -2,6 +2,8 @@
     <string name="app_name">My Recipe Book</string>
 
     <string name="search">Search</string>
+    <string name="selection">Selection</string>
+    <string name="comments">Comments</string>
 
     <string-array name="Selection">
         <item>Ingredients</item>

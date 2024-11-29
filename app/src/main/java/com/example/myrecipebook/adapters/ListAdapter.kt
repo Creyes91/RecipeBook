@@ -44,6 +44,8 @@ class ListAdapter (var items: List<Recipe>, val onItemClick: (Int)-> Unit): Recy
           binding.idtextView.setText(recipe.id.toString())
           binding.cuisineTextView.text= recipe.cuisine.toString()
             binding.recipeTextView.text=recipe.name.toString()
+            Picasso.get().load(recipe.image).into(binding.ImageView)
+
 
         }
 

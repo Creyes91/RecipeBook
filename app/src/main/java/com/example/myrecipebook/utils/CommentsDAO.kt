@@ -20,12 +20,35 @@ class CommentsDAO(var context: Context) {
         db.close()
     }
 
+    fun delete (comment: CommentTask)
+    {
+        open()
+
+        val values= ContentValues().apply {
+            put(CommentTask.COLUMN_RECIPE_ID, comment.recipeid)
+            put(CommentTask.COLUMN_COMMENT, comment.comment)
+            put(CommentTask.COLUMN_ID, comment.id)
+        }
+
+        try{
+            val deletedRows= db.delete(CommentTask.TABLE_NAME,"${CommentTask.COLUMN_ID}=${comment.id}", null)
+        }catch (e:Exception)
+        {
+            Log.e("DB", e.stackTraceToString())
+        }finally {
+            close()
+        }
+
+
+    }
+
      fun insert(commentTask: CommentTask) {
         open()
 
         val values = ContentValues().apply {
             put(CommentTask.COLUMN_RECIPE_ID, commentTask.recipeid)
             put(CommentTask.COLUMN_COMMENT, commentTask.comment)
+
 
         }
         try {
@@ -41,7 +64,7 @@ class CommentsDAO(var context: Context) {
     fun findByID(id: Int): List<CommentTask> {
         open()
         var list: MutableList<CommentTask> = mutableListOf()
-        val projection = arrayOf(CommentTask.COLUMN_RECIPE_ID, CommentTask.COLUMN_COMMENT)
+        val projection = arrayOf(CommentTask.COLUMN_ID,CommentTask.COLUMN_RECIPE_ID, CommentTask.COLUMN_COMMENT)
 
         try {
             val cursor = db.query(
@@ -54,14 +77,16 @@ class CommentsDAO(var context: Context) {
                 null)
 
             while (cursor.moveToNext()) {
-                val id = cursor.getLong(cursor.getColumnIndexOrThrow(CommentTask.COLUMN_RECIPE_ID))
-                val comment =
-                    cursor.getString(cursor.getColumnIndexOrThrow(CommentTask.COLUMN_COMMENT))
+                val recipeid = cursor.getLong(cursor.getColumnIndexOrThrow(CommentTask.COLUMN_RECIPE_ID))
+                val comment = cursor.getString(cursor.getColumnIndexOrThrow(CommentTask.COLUMN_COMMENT))
+                val id=cursor.getLong(cursor.getColumnIndexOrThrow(CommentTask.COLUMN_ID))
 
 
-                val task = CommentTask(id, comment)
+                val task = CommentTask(id,recipeid, comment)
                 list.add(task)
+
             }
+
         } catch (e: Exception) {
             Log.e("DB", e.stackTraceToString())
         }

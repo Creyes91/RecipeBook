@@ -20,6 +20,7 @@ import com.example.myrecipebook.data.RecipeResponse
 import com.example.myrecipebook.databinding.ActivityMainBinding
 import com.example.myrecipebook.services.RecipeService
 import com.example.myrecipebook.utils.RetrofitProvider
+import com.example.myrecipebook.utils.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,11 +31,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var searchAdapter: ListAdapter
     lateinit var favAdapter: FavAdapter
     private var query= "all"
+
     var recipesList: List<Recipe> = emptyList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
 
 

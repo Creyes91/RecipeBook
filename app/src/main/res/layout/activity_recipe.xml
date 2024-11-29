@@ -15,8 +15,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
-
         tools:src="@drawable/image1">
 
 
@@ -27,7 +25,6 @@
         android:layout_height="0dp"
         app:cardCornerRadius="32dp"
         android:layout_marginTop="-32dp"
-
         app:layout_constraintVertical_weight="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageRecipeView"
@@ -38,14 +35,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp"
-
             android:orientation="vertical">
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Selection"
+            android:hint="@string/selection"
             android:paddingTop="32dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">>
             <AutoCompleteTextView
@@ -95,6 +91,14 @@
                 android:visibility="gone">
 
             </TextView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/commentsReciclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                </androidx.recyclerview.widget.RecyclerView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myrecipebook.R
 import com.example.myrecipebook.adapters.CommentsAdapter
 import com.example.myrecipebook.data.CommentTask
@@ -44,8 +46,10 @@ class RecipeActivity : AppCompatActivity() {
         binding= ActivityRecipeBinding.inflate(layoutInflater)
         selectionMenu= binding.autoCompleteSelection
         setContentView(binding.root)
+        coment= CommentTask(-1,-1,"")
+
         val id= intent.getStringExtra(EXTRA_RECIPE_ID).toString()
-        commentsAdapter= CommentsAdapter(commentTask)
+
         getRecipe(id)
 
 
@@ -61,58 +65,57 @@ class RecipeActivity : AppCompatActivity() {
 
             when(selected){
                 "Instruction"->{binding.instruccionTextview.visibility= View.VISIBLE
-                    binding.ingredienteTextview.visibility= View.GONE}
+                    binding.ingredienteTextview.visibility= View.GONE
+                    binding.commentsReciclerView.visibility=View.GONE}
 
                 "Ingredients"->{binding.instruccionTextview.visibility= View.GONE
-                    binding.ingredienteTextview.visibility= View.VISIBLE}
+                    binding.ingredienteTextview.visibility= View.VISIBLE
+                    binding.commentsReciclerView.visibility=View.GONE}
 
-
-            }
-
-
-
-
-            binding.commentsContent.CommentBtn.setOnClickListener{
-
-                println("boton")
-
-                var comment = binding.commentsContent.CommentTXT.editText?.text.toString()
-                if(comment.isEmpty()){
-                    binding.commentsContent.CommentTXT.error= "Escribe algo"
-                    return@setOnClickListener}
-                if(comment.length> 50){
-                    binding.commentsContent.CommentTXT.error="Texto demasiado largo"
-                    return@setOnClickListener}
-
-                coment.comment=comment
-                coment.recipeid=recipe.id.toLong()
-
-                commentsDAO.insert(coment)
-
-              /*  task.name=name
-                if (task.id==-1L)
-                    taskDAO.insert(task)
-                else taskDAO.update(task)*/
-
-                finish()
-
-            }
-
-          /*  if (selected== "Instruction")
-            {
-                binding.instruccionTextview.visibility= View.VISIBLE
-                binding.ingredientsLayout.visibility= View.GONE
-            }else {
-                if (selected== "Ingredients")
-                {
-                    binding.instruccionTextview.visibility= View.GONE
-                    binding.ingredientsLayout.visibility= View.VISIBLE
-
+                "Comments"->{binding.instruccionTextview.visibility= View.GONE
+                    binding.ingredienteTextview.visibility= View.GONE
+                    binding.commentsReciclerView.visibility=View.VISIBLE
                 }
-            }*/
+
+
+            }
+
 
 
         }
+
+
+
+        binding.commentsContent.CommentBtn.setOnClickListener{
+
+            println("boton")
+
+            var comment = binding.commentsContent.CommentTXT.editText?.text.toString()
+            if(comment.isEmpty()){
+                binding.commentsContent.CommentTXT.error= "Escribe algo"
+                return@setOnClickListener}
+            if(comment.length> 50){
+                binding.commentsContent.CommentTXT.error="Texto demasiado largo"
+                return@setOnClickListener}
+
+            coment.comment=comment
+            coment.recipeid=recipe.id.toLong()
+
+            commentsDAO.insert(coment)
+            commentTask= commentsDAO.findByID(recipe.id.toInt()).toMutableList()
+            commentsAdapter.updatesItems(commentTask)
+
+
+
+            /*  task.name=name
+              if (task.id==-1L)
+                  taskDAO.insert(task)
+              else taskDAO.update(task)*/
+
+
+
+        }
+
 
 
 
@@ -121,7 +124,7 @@ class RecipeActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
+        binding.commentsContent.CommentTXT.editText?.setText("")
 
 
     }
@@ -136,12 +139,36 @@ class RecipeActivity : AppCompatActivity() {
 
 
         commentsDAO= CommentsDAO(this)
+        commentTask= commentsDAO.findByID(recipe.id.toInt()).toMutableList()
+        commentsAdapter= CommentsAdapter(commentTask) {
+            val c = commentTask[it]
+            deleteComment(c)
+        }
+        binding.commentsReciclerView.adapter=commentsAdapter
+        binding.commentsReciclerView.layoutManager=LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
       //  commentTask=commentsDAO.findByID(recipe.id.toInt()).toMutableList()
 
 
 
 
     }
+
+    private fun deleteComment(comment: CommentTask) {
+
+        AlertDialog.Builder(this)
+            .setTitle("Borrar?")
+            .setMessage("Estas seguro que quieres borrar este commentario?")
+            .setPositiveButton(android.R.string.ok) { dialog, wich->
+                commentsDAO.delete(comment)
+                commentTask.remove(comment)
+                commentsAdapter.updatesItems(commentTask)
+            }
+            .setNegativeButton(android.R.string.cancel,null)
+            .setIcon(R.drawable.ic_delete)
+            .show()
+    }
+
+
 
     private fun getRecipe(id: String){
 
