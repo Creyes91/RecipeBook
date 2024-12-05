@@ -31,9 +31,9 @@ class FavAdapter (var items: List<Recipe>, val onItemClick: (Int)-> Unit, val on
             onItemClick(position)
         }
 
-        holder.binding.iconFav.setOnClickListener {
+      /*  holder.binding.iconFav.setOnClickListener {
             onItemCheck(position)
-        }
+        }*/
 
     }
 
@@ -48,10 +48,16 @@ class FavAdapter (var items: List<Recipe>, val onItemClick: (Int)-> Unit, val on
         fun render(recipe: Recipe){
             binding.root.visibility= View.VISIBLE
             Picasso.get().load(recipe.image).into(binding.recipeImageView)
-            binding.cookTimeTextView.text= recipe.cookTimeMinutes + "'"
+
+
+
+
+
+
+          /*  binding.cookTimeTextView.text= recipe.cookTimeMinutes + "'"
             binding.ratingBar.rating= recipe.rating.toFloat()
-            binding.tittleRecipeTextView.text=recipe.name
-            binding.iconFav.isChecked= SessionManager(itemView.context).isFav(recipe.id)
+            binding.tittleRecipeTextView.text=recipe.name*/
+           // binding.iconFav.isChecked= SessionManager(itemView.context).isFav(recipe.id)
 
         }
 

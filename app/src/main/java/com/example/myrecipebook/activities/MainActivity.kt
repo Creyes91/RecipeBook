@@ -1,17 +1,22 @@
 package com.example.myrecipebook.activities
 
 import android.content.Intent
+import android.graphics.Rect
 import android.icu.lang.UCharacter.VerticalOrientation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MenuItem.OnActionExpandListener
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.marginLeft
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.myrecipebook.R
 import com.example.myrecipebook.adapters.FavAdapter
 import com.example.myrecipebook.adapters.ListAdapter
@@ -32,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var favAdapter: FavAdapter
     private var query= "all"
     lateinit var Session: SessionManager
+    lateinit var layoutManager: LinearLayoutManager
     var recipesList: List<Recipe> = emptyList()
     var faId=-1
 
@@ -42,6 +48,8 @@ class MainActivity : AppCompatActivity() {
 
         Session= SessionManager(this)
 
+        val snapHelper = PagerSnapHelper()
+        snapHelper.attachToRecyclerView(binding.mainReciclerView)
 
 
         searchAdapter= ListAdapter(recipesList) {
@@ -63,8 +71,52 @@ class MainActivity : AppCompatActivity() {
                 Session.setFavorite(recipe.id)}
         })
 
-     binding.mainReciclerView.adapter= favAdapter
-        binding.mainReciclerView.layoutManager=LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+        binding.mainReciclerView.adapter= favAdapter
+        layoutManager= LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
+        binding.mainReciclerView.layoutManager=layoutManager
+
+
+        binding.mainReciclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+
+
+                val firstVisiblePosition = layoutManager.findFirstVisibleItemPosition()
+                val lastVisiblePosition = layoutManager.findLastVisibleItemPosition()
+
+                for (position in firstVisiblePosition..lastVisiblePosition) {
+                    var view = layoutManager.findViewByPosition(position)
+
+                    val center = recyclerView.width / 2
+                    val viewCenter = (view?.left ?: 0) + view?.width!! /2
+                    val distanceFromCenter = Math.abs(center - viewCenter)
+
+
+                    // Calculamos el tamaño de la imagen basado en su distancia al centro
+                    val scale = 1 - (distanceFromCenter.toFloat() / recyclerView.width)
+                    view?.scaleX = scale
+                    view?.scaleY = scale
+
+                    try {
+                        if (firstVisiblePosition != RecyclerView.NO_POSITION) {
+                            // Mostrar información de la imagen central
+                            showImageInfo(lastVisiblePosition)}
+
+                }catch (e : Exception){
+                    Log.e("error", e.stackTraceToString())
+                }
+
+
+
+
+                }
+
+            }
+            })
+
+
+
 
 
 
@@ -98,6 +150,17 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
+
+
+
+    }
+
+    private fun showImageInfo(position: Int)
+    {
+        binding.cookTimeTextView.text= recipesList[position].cookTimeMinutes + "'"
+        binding.ratingBar.rating= recipesList[position].rating.toFloat()
+        binding.tittleRecipeTextView.text=recipesList[position].name
 
 
     }

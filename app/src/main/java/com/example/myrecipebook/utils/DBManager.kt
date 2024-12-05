@@ -35,6 +35,9 @@ class DBManager(context: Context): SQLiteOpenHelper(context, DATABASE_NAME,null,
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL(SQL_DELETE_TABLE)
         db?.execSQL(SQL_CREATE_TABLE)
+        //Alter table para modificar la tabla
+
+        /* when old version */
     }
 
 
